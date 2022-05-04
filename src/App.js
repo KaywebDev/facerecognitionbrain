@@ -1,6 +1,7 @@
 import React from 'react';
 import clarifai from 'clarifai';
 import Navigation from './components/navigation/navigation';
+import Signin from './components/SignIn/SignIn';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
@@ -16,6 +17,7 @@ class App extends React.Component {
       input: '',
       imageUrl: '',
       box: {},
+      route: 'sigin',
     }
   }
 
@@ -51,10 +53,16 @@ class App extends React.Component {
     return (
       <div className="App">
         <Navigation />
-        <Logo></Logo>
-        <Rank></Rank>
-        <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}></ImageLinkForm>
-        <FaceRecognition imageUrl={this.state.imageUrl} box={this.state.box} />
+        {this.state.route === 'signin'
+          ? <Signin />
+          :
+          <div>
+            <Logo />
+            <Rank></Rank>
+            <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}></ImageLinkForm>
+            <FaceRecognition imageUrl={this.state.imageUrl} box={this.state.box} />
+          </div>
+        }
       </div>
     );
   }
