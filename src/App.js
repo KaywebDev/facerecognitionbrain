@@ -2,6 +2,7 @@ import React from 'react';
 import clarifai from 'clarifai';
 import Navigation from './components/navigation/navigation';
 import Signin from './components/SignIn/SignIn';
+import Register from './components/Register/Register';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
@@ -17,7 +18,8 @@ class App extends React.Component {
       input: '',
       imageUrl: '',
       box: {},
-      route: 'sigin',
+      route: 'signin',
+      isSignedIn: false,
     }
   }
 
@@ -49,19 +51,32 @@ class App extends React.Component {
       .catch(error => console.log(error));
   }
 
+  onRouteChange = (route) => {
+    if (route === 'signout') {
+      this.setState({ isSignedIn: false })
+    } else if (route === 'home') {
+      this.setState({ isSignedIn: true })
+    }
+    this.setState({ route: route });
+  }
+
   render() {
+    const { isSignedIn, imageUrl, route, box } = this.state;
     return (
       <div className="App">
-        <Navigation />
-        {this.state.route === 'signin'
-          ? <Signin />
-          :
-          <div>
+        <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
+        {route === 'home'
+          ? <div>
             <Logo />
             <Rank></Rank>
             <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}></ImageLinkForm>
-            <FaceRecognition imageUrl={this.state.imageUrl} box={this.state.box} />
+            <FaceRecognition imageUrl={imageUrl} box={box} />
           </div>
+          : (
+            route === 'signin'
+              ? <Signin onRouteChange={this.onRouteChange} />
+              : <Register onRouteChange={this.onRouteChange} />
+          )
         }
       </div>
     );
