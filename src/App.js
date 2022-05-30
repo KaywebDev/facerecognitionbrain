@@ -65,7 +65,7 @@ class App extends React.Component {
 
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input });
-    fetch('http://localhost:3000/imageurl', {
+    fetch('https://gentle-temple-84957.herokuapp.com/imageurl', {
       method: 'post',
       headers: { 'content-Type': 'application/json' },
       body: JSON.stringify({
@@ -75,7 +75,7 @@ class App extends React.Component {
       .then(responce => responce.json())
       .then(responce => {
         if (responce) {
-          fetch('http://localhost:3000/image', {
+          fetch('https://gentle-temple-84957.herokuapp.com/image', {
             method: 'put',
             headers: { 'content-Type': 'application/json' },
             body: JSON.stringify({
