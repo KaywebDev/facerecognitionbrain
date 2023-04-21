@@ -1,2 +1,3 @@
 # facerecognitionbrain
-A face recognition brain coded in React
+A face recognition brain coded in React.
+
